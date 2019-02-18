@@ -234,6 +234,7 @@ void draw() {
     //  Hier wird der GameOver-Screen erstellt.
   } else {
     textAlign(LEFT);
+    //  Git Änderung
     fill(100, 0, 0);
     background(0);
     textSize(150);
