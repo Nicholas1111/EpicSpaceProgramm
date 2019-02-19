@@ -40,14 +40,14 @@ boolean isColliding(float xPos, float uPos) {
   boolean returnValue = false;   
   if (xPos < 140) {
     if (uPos < shipY) {
-      if (uPos > shipY + 130) {
+      if (uPos > shipY + 110) {
         returnValue = true;
       }
     }
   }
 
   if (xPos < 140) {
-    if (uPos < shipY + 130) {
+    if (uPos < shipY + 110) {
       if (uPos > shipY) {
         returnValue = true;
       }
@@ -154,7 +154,7 @@ void draw() {
     }
 
     //  Hier wird das Raumschiff platziert.
-    image(SpaceShip, 40, shipY, 100, 100);
+    image(SpaceShip, 40, shipY, 120, 75);
 
     //  Hier wird eine Variable für die Anzahl festgelegt
     int l = 0;
