@@ -30,6 +30,48 @@ int planetC[] = new int[MAXplanets];
 
 float shuttleX;
 float shuttleY;
+float shuttleSize = 100;
 PImage shuttle;
 
 // ===== ===== ===== ===== \\
+
+
+// ===== Meteors ===== \\
+
+int MAXmeteors = 10;
+float meteorX[] = new float[MAXmeteors];
+float meteorY[] = new float[MAXmeteors];
+float meteorS[] = new float[MAXmeteors];
+float meteorSize[] = new float[MAXmeteors];
+PImage meteor;
+
+// ===== ===== ===== ===== \\
+
+
+// ===== Level - Score - Health ===== \\
+
+int score;
+int lvl = 1;
+int lvlTimer;
+int health = 10;
+
+// ===== ===== ===== ===== \\
+
+
+// =====  is Projectile colliding with Object? ===== \\
+
+boolean isColliding(float objectSize, float objectPosX, float objectPosY, float projectileSize, float projectilePosX, float projectilePosY) {
+  boolean returnValue = false;   
+
+    //  
+  if ( projectilePosX - projectileSize/2 < objectPosX + objectSize/2) {
+    if ( projectilePosX + projectileSize/2 > objectPosX - objectSize/2) {
+      if ( projectilePosY + projectileSize/2 > objectPosY - objectSize/2) {
+        if ( projectilePosY - projectileSize/2 < objectPosY + objectSize/2) {
+          returnValue = true;
+        }
+      }
+    }
+  }
+  return returnValue;
+}

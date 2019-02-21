@@ -4,9 +4,10 @@ void setup() {
   textSize(100);
   fill(255);
   stroke(255);
-  frameRate(100);
+  frameRate(50);
 
   shuttle = loadImage("shuttle.png");
+  meteor = loadImage("meteor.png");
 
   int starCounter = 0;
 
@@ -27,5 +28,15 @@ void setup() {
     planetS[planetCounter] = random(0.5, 2.0);
     planetSize[planetCounter] = random(300, 500);
     planetCounter += 1;
+  }
+
+  int meteorCounter = 0;
+  
+  while (meteorCounter < MAXmeteors) {
+    meteorX[meteorCounter] = random(0, width);
+    meteorY[meteorCounter] = random(0, height);
+    meteorS[meteorCounter] = random(1, 5);
+    meteorSize[meteorCounter] = random(20, 50);
+    meteorCounter += 1;
   }
 }

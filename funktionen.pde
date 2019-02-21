@@ -45,15 +45,105 @@ void drawPlanets() {
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== \\
 
 void drawShuttle() {
-  
-  shuttleX = MouseInfo.getPointerInfo().getLocation().x - shuttle.width/2;
-  shuttleY = MouseInfo.getPointerInfo().getLocation().y - 50;
-  image(shuttle, shuttleX, shuttleY, 100, 100);
+  if (MouseInfo.getPointerInfo().getLocation().x < displayWidth / 6) {    
+    shuttleX = 0 - 50;
+  } else if (MouseInfo.getPointerInfo().getLocation().x > displayWidth / 6 * 5) {
+    shuttleX = (displayWidth / 6 * 4) - 50;
+  } else {
+
+
+    shuttleX = MouseInfo.getPointerInfo().getLocation().x - (displayWidth / 6) - 50;
+  }
+
+  if (MouseInfo.getPointerInfo().getLocation().y < (displayHeight / 6) + 25) {
+    shuttleY = 0 - 25;
+  } else if (MouseInfo.getPointerInfo().getLocation().y > (displayHeight / 6 * 5) + 25) {
+    shuttleY = (displayHeight / 6 * 4) - 25;
+  } else {
+    shuttleY = MouseInfo.getPointerInfo().getLocation().y - ((displayHeight / 6)) - 50;
+  }
+
+  image(shuttle, shuttleX, shuttleY - 25, shuttleSize, shuttleSize);
 }
 
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== \\
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== \\
 
-void positioningShuttle() {
-  
+void drawScore() {
+  score = millis();
+  textAlign(RIGHT);
+  fill(255);
+  textSize(displayHeight/20);
+  text(score, displayWidth/6*4, displayHeight/20);
+}
+
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== \\
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== \\
+
+void drawLevel() {
+  lvlTimer += 1;
+  if (lvlTimer > 1000) {
+    lvl += 1;
+    lvlTimer = 0;
+  }
+  textAlign(LEFT);
+  fill(255);
+  textSize(displayHeight/20);
+  text("Level: " + lvl, 0, displayHeight/20);
+}
+
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== \\
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== \\
+
+void drawMeteors() {
+
+  int meteorCounter = 0;
+
+  //  Hier werden die Sterne bewegt.
+  while (meteorCounter < MAXmeteors) {
+    image(meteor, meteorX[meteorCounter] - (meteorSize[meteorCounter]/2), meteorY[meteorCounter] - (meteorSize[meteorCounter]/2), meteorSize[meteorCounter], meteorSize[meteorCounter]); 
+
+    meteorX[meteorCounter] = meteorX[meteorCounter] - meteorS[meteorCounter];
+
+    if (isColliding(shuttleSize, mouseX, mouseY, meteorSize[meteorCounter], meteorX[meteorCounter], meteorY[meteorCounter])) {
+      health -=1;
+      meteorS[meteorCounter] = random(1 + lvl / 3, 5 + lvl / 3);
+      meteorX[meteorCounter] = width;
+      meteorY[meteorCounter] = random(0, height);
+      meteorSize[meteorCounter] = random(20, 50);
+    }
+
+    if (meteorX[meteorCounter] < 0) {
+      meteorS[meteorCounter] = random(1 + lvl / 3, 5 + lvl / 3);
+      meteorX[meteorCounter] = width;
+      meteorY[meteorCounter] = random(0, height);
+      meteorSize[meteorCounter] = random(20, 50);
+    }
+    meteorCounter += 1;
+  }
+}
+
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== \\
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== \\
+
+void drawHealthBar() {
+  strokeWeight(30);
+  stroke(100);
+  fill(100);
+  line(300, 35, 1050, 35); 
+
+  strokeWeight(20);
+  stroke(255, 0, 0);
+  fill(255, 0, 0);
+  line(300, 35, 300 + health*75, 35);
+}
+
+void drawMaxHealth() {
+  if (health > 10) {
+    health = 10;
+  }
+  if (health < 1) {
+    noLoop();
+    health = 0;
+  }
 }

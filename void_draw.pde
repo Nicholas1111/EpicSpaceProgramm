@@ -1,6 +1,3 @@
-import java.awt.MouseInfo;
-import java.awt.Component;
-import java.awt.*;
 
 void draw() {
   background(0);
@@ -8,5 +5,9 @@ void draw() {
   drawStars();
   drawPlanets();
   drawShuttle();
-  //println(MouseInfo.getPointerInfo().getLocation(), mouseY);
+  drawMeteors();
+  drawHealthBar();
+  drawMaxHealth();
+  drawScore();
+  drawLevel();
 }
