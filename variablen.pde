@@ -63,10 +63,16 @@ int health = 10;
 boolean isColliding(float objectSize, float objectPosX, float objectPosY, float projectileSize, float projectilePosX, float projectilePosY) {
   boolean returnValue = false;   
 
-    //  
+  //  Falls die untere Seite des Objekts mit der oberen Seite des Projektils kolliediert. 
   if ( projectilePosX - projectileSize/2 < objectPosX + objectSize/2) {
+
+    //  Falls die obere Seite des Objekts mit der unteren Seite des Projektils kolliediert. 
     if ( projectilePosX + projectileSize/2 > objectPosX - objectSize/2) {
+
+      //  Falls die  Rückseite des Objekts mit der vordere Seite des Projektils kolliediert. 
       if ( projectilePosY + projectileSize/2 > objectPosY - objectSize/2) {
+
+        //  Falls die vordere Seite des Objekts mit der Rückseite des Projektils kolliediert. 
         if ( projectilePosY - projectileSize/2 < objectPosY + objectSize/2) {
           returnValue = true;
         }
