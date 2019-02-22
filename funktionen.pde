@@ -1,4 +1,4 @@
-void drawStars() {
+void drawStars() { //<>//
 
   int starCounter = 0;
 
@@ -82,7 +82,7 @@ void drawScore() {
 
 void drawLevel() {
   lvlTimer += 1;
-  if (lvlTimer > 1000) {
+  if (lvlTimer > 250) {
     lvl += 1;
     lvlTimer = 0;
   }
@@ -106,19 +106,31 @@ void drawMeteors() {
 
     meteorX[meteorCounter] = meteorX[meteorCounter] - (meteorS[meteorCounter] + (lvl / 3));
 
+    if (isColliding(meteorSize[meteorCounter], meteorX[meteorCounter], meteorY[meteorCounter], bulletSize, bulletX, bulletY)) {
+      meteorS[meteorCounter] = random(1, 5);
+      meteorX[meteorCounter] = width;
+      meteorY[meteorCounter] = random(0, height);
+      meteorSize[meteorCounter] = random(30, 100);
+      
+      bulletInAir = false;
+      bulletX = -100;
+      bulletY = -100;
+    }
+
+
     if (isColliding(shuttleSize, mouseX, mouseY, meteorSize[meteorCounter], meteorX[meteorCounter], meteorY[meteorCounter])) {
       health -=1;
       meteorS[meteorCounter] = random(1, 5);
       meteorX[meteorCounter] = width;
       meteorY[meteorCounter] = random(0, height);
-      meteorSize[meteorCounter] = random(20, 50);
+      meteorSize[meteorCounter] = random(30, 100);
     }
 
     if (meteorX[meteorCounter] < 0) {
       meteorS[meteorCounter] = random(1, 5);
       meteorX[meteorCounter] = width;
       meteorY[meteorCounter] = random(0, height);
-      meteorSize[meteorCounter] = random(20, 50);
+      meteorSize[meteorCounter] = random(30, 100);
     }
     meteorCounter += 1;
   }
@@ -157,6 +169,9 @@ void drawHealthBar() {
   line(300, 35, 300 + health*75, 35);
 }
 
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== \\
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== \\
+
 void drawMaxHealth() {
   if (health > 10) {
     health = 10;
@@ -170,26 +185,50 @@ void drawMaxHealth() {
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== \\
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== \\
 
-//void timerHealpack() { //<>//
-//  packTimer += random(1, 3);
+void drawPack() {
+  packTimer += random(1, 3);
 
-//  if (packTimer > 1) {
-//    drawPack();
-//    packTimer = 0;
-//  }
-//}
+  if (packTimer > 1000) {
+    image(healpack, packX - (packSize/2), packY - (packSize/2), packSize, packSize);
+    packX -= packS;
+    if (isColliding(shuttleSize, mouseX, mouseY, packSize, packX, packY)) {
+      health += 2;
+      packTimer = 0;
+      packX = width;
+      packY = random(0, height);
+      packSize = 100;
+      packS = 3;
+    }
 
-//void drawPack() {
-//  packX = width;
-//  packY = random(0, height);
-//  packSize = 100;
-//  packS = 3;
-  
-//  while (packX > 0) {
-//    image(healpack, packX, packY, packSize, packSize); 
-//    packX = packX - packS;
-//    if (isColliding(shuttleSize, mouseX, mouseY, packSize, packX, packY)) {
-//      health +=2;
-//    }
-//  }
-//}
+    if (packX < 0) {
+      packTimer = 0;
+      packX = width;
+      packY = random(0, height);
+      packSize = 100;
+      packS = 3;
+    }
+  }
+}
+
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== \\
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== \\
+
+void drawBullet() {
+
+  if (mousePressed == true && bulletInAir == false) {
+    bulletInAir = true;
+    bulletX = mouseX;
+    bulletY = mouseY;
+  }
+  if (bulletInAir == true) {
+    if (bulletX < width) {
+      image(bullet, bulletX - bulletSize/2, bulletY - bulletSize/2, bulletSize, bulletSize);
+      bulletX += bulletS;
+    } else {
+      bulletInAir = false;
+    }
+  }
+}
+
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== \\
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== \\

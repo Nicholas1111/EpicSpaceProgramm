@@ -26,8 +26,7 @@ int planetC[] = new int[MAXplanets];
 float shuttleX;
 float shuttleY;
 float shuttleSize = 100;
-PImage shuttle = loadImage("shuttle.png");
-
+PImage shuttle;
 // ===== ===== ===== ===== \\
 
 
@@ -38,7 +37,7 @@ float meteorX[] = new float[MAXmeteors];
 float meteorY[] = new float[MAXmeteors];
 float meteorS[] = new float[MAXmeteors];
 float meteorSize[] = new float[MAXmeteors];
-PImage meteor = loadImage("meteor.png");
+PImage meteor;
 
 // ===== ===== ===== ===== \\
 
@@ -82,11 +81,23 @@ boolean isColliding(float objectSize, float objectPosX, float objectPosY, float 
 
 // ===== Healpack ===== \\
 
-//float packX;
-//float packY;
-//float packS;
-//float packSize;
-//int packTimer = 0;
-//PImage healpack = loadImage("healpack.png");
+float packX;
+float packY;
+float packS;
+float packSize;
+int packTimer = 0;
+PImage healpack;
+
+// ===== ===== ===== ===== \\
+
+
+// ===== Bullet ===== \\
+
+boolean bulletInAir = false;
+float bulletX;
+float bulletY;
+float bulletS;
+float bulletSize;
+PImage bullet;
 
 // ===== ===== ===== ===== \\
