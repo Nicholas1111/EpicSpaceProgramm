@@ -7,7 +7,8 @@ void draw() {
   drawShuttle();
   drawMeteors();
   drawHealthBar();
-  drawMaxHealth();
   drawScore();
   drawLevel();
+  drawMaxHealth();
+  //timerHealpack();
 }

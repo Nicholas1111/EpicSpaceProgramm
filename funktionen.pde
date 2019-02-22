@@ -98,29 +98,48 @@ void drawLevel() {
 void drawMeteors() {
 
   int meteorCounter = 0;
+  MAXmeteors = lvl + 3;
 
   //  Hier werden die Sterne bewegt.
   while (meteorCounter < MAXmeteors) {
     image(meteor, meteorX[meteorCounter] - (meteorSize[meteorCounter]/2), meteorY[meteorCounter] - (meteorSize[meteorCounter]/2), meteorSize[meteorCounter], meteorSize[meteorCounter]); 
 
-    meteorX[meteorCounter] = meteorX[meteorCounter] - meteorS[meteorCounter];
+    meteorX[meteorCounter] = meteorX[meteorCounter] - (meteorS[meteorCounter] + (lvl / 3));
 
     if (isColliding(shuttleSize, mouseX, mouseY, meteorSize[meteorCounter], meteorX[meteorCounter], meteorY[meteorCounter])) {
       health -=1;
-      meteorS[meteorCounter] = random(1 + lvl / 3, 5 + lvl / 3);
+      meteorS[meteorCounter] = random(1, 5);
       meteorX[meteorCounter] = width;
       meteorY[meteorCounter] = random(0, height);
       meteorSize[meteorCounter] = random(20, 50);
     }
 
     if (meteorX[meteorCounter] < 0) {
-      meteorS[meteorCounter] = random(1 + lvl / 3, 5 + lvl / 3);
+      meteorS[meteorCounter] = random(1, 5);
       meteorX[meteorCounter] = width;
       meteorY[meteorCounter] = random(0, height);
       meteorSize[meteorCounter] = random(20, 50);
     }
     meteorCounter += 1;
   }
+}
+
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== \\
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== \\
+
+void drawEndscreen() {
+  noLoop();
+  background(0);
+  textAlign(CENTER);
+  textSize(width / 10);
+  fill(150, 0, 0);
+  text("Game Over", width /2, height /2);
+
+  fill(255);
+  textSize(width/20);
+  text("Dein Score: " + score, width /2, height /2 + 100);
+
+  text("Dein Level: " + lvl, width /2, height /2 + 200);
 }
 
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== \\
@@ -143,7 +162,34 @@ void drawMaxHealth() {
     health = 10;
   }
   if (health < 1) {
-    noLoop();
+    drawEndscreen();
     health = 0;
   }
 }
+
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== \\
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== \\
+
+//void timerHealpack() { //<>//
+//  packTimer += random(1, 3);
+
+//  if (packTimer > 1) {
+//    drawPack();
+//    packTimer = 0;
+//  }
+//}
+
+//void drawPack() {
+//  packX = width;
+//  packY = random(0, height);
+//  packSize = 100;
+//  packS = 3;
+  
+//  while (packX > 0) {
+//    image(healpack, packX, packY, packSize, packSize); 
+//    packX = packX - packS;
+//    if (isColliding(shuttleSize, mouseX, mouseY, packSize, packX, packY)) {
+//      health +=2;
+//    }
+//  }
+//}

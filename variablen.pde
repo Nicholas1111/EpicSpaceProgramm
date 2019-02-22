@@ -1,8 +1,3 @@
-// ===== Screen ===== \\
-
-// ===== ===== ===== ===== \\
-
-
 // ===== Stars ===== \\
 
 int MAXstars = 200;
@@ -31,19 +26,19 @@ int planetC[] = new int[MAXplanets];
 float shuttleX;
 float shuttleY;
 float shuttleSize = 100;
-PImage shuttle;
+PImage shuttle = loadImage("shuttle.png");
 
 // ===== ===== ===== ===== \\
 
 
 // ===== Meteors ===== \\
 
-int MAXmeteors = 10;
+int MAXmeteors = 1000;
 float meteorX[] = new float[MAXmeteors];
 float meteorY[] = new float[MAXmeteors];
 float meteorS[] = new float[MAXmeteors];
 float meteorSize[] = new float[MAXmeteors];
-PImage meteor;
+PImage meteor = loadImage("meteor.png");
 
 // ===== ===== ===== ===== \\
 
@@ -81,3 +76,17 @@ boolean isColliding(float objectSize, float objectPosX, float objectPosY, float 
   }
   return returnValue;
 }
+
+// ===== ===== ===== ===== \\
+
+
+// ===== Healpack ===== \\
+
+//float packX;
+//float packY;
+//float packS;
+//float packSize;
+//int packTimer = 0;
+//PImage healpack = loadImage("healpack.png");
+
+// ===== ===== ===== ===== \\

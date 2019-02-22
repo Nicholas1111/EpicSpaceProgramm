@@ -6,9 +6,6 @@ void setup() {
   stroke(255);
   frameRate(50);
 
-  shuttle = loadImage("shuttle.png");
-  meteor = loadImage("meteor.png");
-
   int starCounter = 0;
 
   while (starCounter < MAXstars) {
@@ -31,9 +28,9 @@ void setup() {
   }
 
   int meteorCounter = 0;
-  
+
   while (meteorCounter < MAXmeteors) {
-    meteorX[meteorCounter] = random(0, width);
+    meteorX[meteorCounter] = width;
     meteorY[meteorCounter] = random(0, height);
     meteorS[meteorCounter] = random(1, 5);
     meteorSize[meteorCounter] = random(20, 50);
