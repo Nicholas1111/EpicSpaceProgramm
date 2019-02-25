@@ -101,3 +101,15 @@ float bulletSize;
 PImage bullet;
 
 // ===== ===== ===== ===== \\
+
+
+// ===== Nickname und Highscore ===== \\
+
+final StringList ids = new StringList( new String[] {
+  } );
+
+LinkedList<Player> highscore = new LinkedList <Player>();
+
+// ===== ===== ===== ===== \\
+
+boolean inGame = true;

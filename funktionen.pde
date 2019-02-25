@@ -1,4 +1,8 @@
-void drawStars() { //<>//
+ //<>//
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== \\
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== \\
+
+void drawStars() {
 
   int starCounter = 0;
 
@@ -70,7 +74,7 @@ void drawShuttle() {
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== \\
 
 void drawScore() {
-  score = millis();
+  score += 1;
   textAlign(RIGHT);
   fill(255);
   textSize(displayHeight/20);
@@ -96,7 +100,6 @@ void drawLevel() {
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== \\
 
 void drawMeteors() {
-
   int meteorCounter = 0;
   MAXmeteors = lvl + 3;
 
@@ -111,7 +114,7 @@ void drawMeteors() {
       meteorX[meteorCounter] = width;
       meteorY[meteorCounter] = random(0, height);
       meteorSize[meteorCounter] = random(30, 100);
-      
+
       bulletInAir = false;
       bulletX = -100;
       bulletY = -100;
@@ -140,18 +143,36 @@ void drawMeteors() {
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== \\
 
 void drawEndscreen() {
-  noLoop();
-  background(0);
-  textAlign(CENTER);
-  textSize(width / 10);
-  fill(150, 0, 0);
-  text("Game Over", width /2, height /2);
+  if (keyPressed) {
+    if (key == ' ') {
+      drawHighscoreScreen();
+    }
+    if (key == ENTER) {
+      inGame = true;
+      health = 10;
+      score = 0;
+      lvl = 0;
+      packTimer = 0;
+      lvlTimer = 0;
+    }
+  } else {
+    background(0);
+    textAlign(CENTER);
+    textSize(width / 10);
+    fill(150, 0, 0);
+    text("Game Over", width /2, height /2);
 
-  fill(255);
-  textSize(width/20);
-  text("Dein Score: " + score, width /2, height /2 + 100);
+    fill(255);
+    textSize(width/20);
+    text("Dein Score: " + score, width /2, height /2 + 100);
 
-  text("Dein Level: " + lvl, width /2, height /2 + 200);
+    text("Dein Level: " + lvl, width /2, height /2 + 200);
+
+    textSize(width/30);
+    fill(100);
+    text("Drücke die Leertaste, um die Highscores zu sehen.", width/2, height/2 + 300);
+    text("Drücke Enter, um ein weiteres Spiel zu starten.", width/2, height/2 + 350);
+  }
 }
 
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== \\
@@ -177,8 +198,9 @@ void drawMaxHealth() {
     health = 10;
   }
   if (health < 1) {
-    drawEndscreen();
     health = 0;
+    inGame = false;
+    Nickname();
   }
 }
 
@@ -232,3 +254,66 @@ void drawBullet() {
 
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== \\
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== \\
+
+void Nickname() {
+
+  final String id = showInputDialog("Bitte lege einen Namen fest.");
+
+  if (id == null)   exit();
+
+  else if ("".equals(id)) {
+    showMessageDialog(null, "Bitte etwas eingeben!", 
+      "Alert", ERROR_MESSAGE);
+    Nickname();
+  } else if (ids.hasValue(id)) {
+    showMessageDialog(null, "ID \"" + id + "\" Dieser Name ist schon vergeben!", 
+      "Alert", ERROR_MESSAGE);
+    Nickname();
+  } else {
+    showMessageDialog(null, "Dein Name: " + id + " wurde mit dem Score: " + score + " zur Liste hinzugefügt.", 
+      "Info", INFORMATION_MESSAGE);
+
+    ids.append(id);
+  }
+  Player newplayer = new Player();
+  newplayer.Name = id;
+  newplayer.Score = score;
+  highscore.add(newplayer);
+}
+
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== \\
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== \\
+
+void drawHighscoreScreen() {
+  background(0);
+  textSize(width/20);
+  textAlign(CENTER);
+  fill(255);
+
+  Collections.sort(highscore);
+
+  if (highscore.size() > 0) {
+    text("1. " + highscore.get(0).print(), width/2, 150);
+  }
+
+  if (highscore.size() > 1) {
+    text("2. " + highscore.get(1).print(), width/2, 250);
+  }
+
+  if (highscore.size() > 2) {
+    text("3. " + highscore.get(2).print(), width/2, 350);
+  }
+
+  if (highscore.size() > 3) {
+    text("4. " + highscore.get(3).print(), width/2, 450);
+  }
+
+  if (highscore.size() > 4) {
+    text("5. " + highscore.get(4).print(), width/2, 550);
+  }
+
+  fill(100);
+  textSize(width/30);
+  text("Lasse Leertaste los, dein Spielergebnis zu sehen.", width/2, height/2 + 300);
+  text("Drücke Enter, um ein weiteres Spiel zu starten.", width/2, height/2 + 350);
+}
