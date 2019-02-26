@@ -311,6 +311,12 @@ void drawHighscoreScreen() {
     text("5. " + highscore.get(4).print(), width/2, 550);
   }
 
+  textAlign(LEFT);
+  fill(200);
+  textSize(width/35);
+  text("Die Top 5 Scores von " + highscore.size() + " gespielten Spielen.", 50, 600);
+
+  textAlign(CENTER);
   fill(100);
   textSize(width/30);
   text("Lasse die Leertaste los, um dein Spielergebnis zu sehen.", width/2, height/2 + 300);
@@ -320,23 +326,25 @@ void drawHighscoreScreen() {
 //==
 //==
 
+
 PrintWriter output;
 int size;
-boolean highscoreSaved = false;
+//boolean highscoreSaved = false;
 
 void saveHighscore() {
   size = 0;
+  output = createWriter("highscore.txt");
 
-  if (highscoreSaved == false) {
-    while ( size < highscore.size() ) {
-      output.println(highscore.get(size).Name + " | " + highscore.get(size).Score);
-      size += 1;
-    }
-    output.flush();
-    output.close();
-    highscoreSaved = true;
-    size = 0;
+  //  if (highscoreSaved == false) {
+  while ( size < highscore.size() ) {
+    output.println(highscore.get(size).Name + " | " + highscore.get(size).Score);
+    size += 1;
   }
+  output.flush();
+  output.close();
+  //highscoreSaved = true;
+  size = 0;
+  //}
 }
 
 void readHighscore() {

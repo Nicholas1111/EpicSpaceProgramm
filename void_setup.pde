@@ -52,6 +52,5 @@ void setup() {
   bulletSize = 50;
   
   readHighscore();
-  output = createWriter("highscore.txt");
   println("Highscores erfolgreich geladen.");
 }

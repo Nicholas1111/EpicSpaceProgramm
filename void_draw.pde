@@ -1,7 +1,7 @@
 
 void draw() {
   if (inGame == true) {
-    highscoreSaved = false;
+    //highscoreSaved = false;
     background(0);
     stroke(255);
     drawStars();
