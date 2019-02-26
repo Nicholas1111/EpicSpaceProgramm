@@ -113,3 +113,4 @@ LinkedList<Player> highscore = new LinkedList <Player>();
 // ===== ===== ===== ===== \\
 
 boolean inGame = true;
+int SizeOfScores = 0;

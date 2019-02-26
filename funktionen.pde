@@ -147,14 +147,14 @@ void drawEndscreen() {
     if (key == ' ') {
       drawHighscoreScreen();
     }
-    if (key == ENTER) {
-      inGame = true;
-      health = 10;
-      score = 0;
-      lvl = 0;
-      packTimer = 0;
-      lvlTimer = 0;
-    }
+    //if (key == ENTER) {
+    //  inGame = true;
+    //  health = 10;
+    //  score = 0;
+    //  lvl = 0;
+    //  packTimer = 0;
+    //  lvlTimer = 0;
+    //}
   } else {
     background(0);
     textAlign(CENTER);
@@ -171,7 +171,7 @@ void drawEndscreen() {
     textSize(width/30);
     fill(100);
     text("Drücke die Leertaste, um die Highscores zu sehen.", width/2, height/2 + 300);
-    text("Drücke Enter, um ein weiteres Spiel zu starten.", width/2, height/2 + 350);
+    text("Starte das Spiel neu, um eine weitere runde zu starten.", width/2, height/2 + 350);
   }
 }
 
@@ -266,11 +266,10 @@ void Nickname() {
       "Alert", ERROR_MESSAGE);
     Nickname();
   } else if (ids.hasValue(id)) {
-    showMessageDialog(null, "ID \"" + id + "\" Dieser Name ist schon vergeben!", 
-      "Alert", ERROR_MESSAGE);
-    Nickname();
+    showMessageDialog(null, "Der score wurde Hinzugefügt.", 
+      "Info", INFORMATION_MESSAGE);
   } else {
-    showMessageDialog(null, "Dein Name: " + id + " wurde mit dem Score: " + score + " zur Liste hinzugefügt.", 
+    showMessageDialog(null, "Der score wurde Hinzugefügt.", 
       "Info", INFORMATION_MESSAGE);
 
     ids.append(id);
@@ -314,6 +313,50 @@ void drawHighscoreScreen() {
 
   fill(100);
   textSize(width/30);
-  text("Lasse Leertaste los, dein Spielergebnis zu sehen.", width/2, height/2 + 300);
-  text("Drücke Enter, um ein weiteres Spiel zu starten.", width/2, height/2 + 350);
+  text("Lasse die Leertaste los, um dein Spielergebnis zu sehen.", width/2, height/2 + 300);
+  text("Starte das Spiel neu, um eine weitere runde zu starten.", width/2, height/2 + 350);
+}
+
+//==
+//==
+
+PrintWriter output;
+int size;
+boolean highscoreSaved = false;
+
+void saveHighscore() {
+  size = 0;
+
+  if (highscoreSaved == false) {
+    while ( size < highscore.size() ) {
+      output.println(highscore.get(size).Name + " | " + highscore.get(size).Score);
+      size += 1;
+    }
+    output.flush();
+    output.close();
+    highscoreSaved = true;
+    size = 0;
+  }
+}
+
+void readHighscore() {
+  BufferedReader reader = createReader("highscore.txt");
+  String line = null;
+  try {
+    while ((line = reader.readLine()) != null) {
+      String[] pieces = splitTokens(line, "|");
+      pieces[0] = trim(pieces[0]);
+      pieces[1] = trim(pieces[1]);
+      String NAME = pieces[0];
+      int SCORE = Integer.parseInt(pieces[1]);
+      Player newplayer = new Player();
+      newplayer.Name = NAME;
+      newplayer.Score = SCORE;
+      highscore.add(newplayer);
+    }
+    reader.close();
+  } 
+  catch (IOException e) {
+    e.printStackTrace();
+  }
 }

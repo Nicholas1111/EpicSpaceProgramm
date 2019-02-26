@@ -1,5 +1,4 @@
 void setup() {
-  //fullScreen();
   background(0);
   textSize(100);
   fill(255);
@@ -51,4 +50,8 @@ void setup() {
   bulletY = mouseY;
   bulletS = 5;
   bulletSize = 50;
+  
+  readHighscore();
+  output = createWriter("highscore.txt");
+  println("Highscores erfolgreich geladen.");
 }

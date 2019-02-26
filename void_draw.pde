@@ -1,6 +1,7 @@
 
 void draw() {
   if (inGame == true) {
+    highscoreSaved = false;
     background(0);
     stroke(255);
     drawStars();
@@ -15,6 +16,7 @@ void draw() {
     drawMaxHealth();
   }
   if (inGame == false) {
+    saveHighscore();
     drawEndscreen();
   }
 }
