@@ -314,7 +314,7 @@ void drawHighscoreScreen() {
   textAlign(LEFT);
   fill(200);
   textSize(width/35);
-  text("Die Top 5 Scores von " + highscore.size() + " gespielten Spielen.", 50, 600);
+  text("Die Top 5 Scores von " + (highscore.size() - 2) + " gespielten Spielen.", 50, 600);
 
   textAlign(CENTER);
   fill(100);
