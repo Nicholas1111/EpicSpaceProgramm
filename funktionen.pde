@@ -1,12 +1,13 @@
  //<>//
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== \\
-// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== \\
+// ===== ===== ===== ===== ===== ===== ===== ===== === Hier werden die Sterne generiert. === ===== ===== ===== ===== ===== ===== \\
 
 void drawStars() {
 
   int starCounter = 0;
 
-  //  Hier werden die Sterne bewegt.
+  // Hier werden die Sterne bewegt.
+
   while (starCounter < MAXstars) {
     stroke(255);
     strokeWeight(starSize[starCounter]);
@@ -14,7 +15,8 @@ void drawStars() {
 
     starX[starCounter] = starX[starCounter] - starS[starCounter];
 
-    //  Hier werden die Sterne, wenn sie links ankommen, wieder nach rechts gesetzt.
+    // Hier werden die Sterne, wenn sie links ankommen, wieder nach rechts gesetzt.
+
     if (starX[starCounter] < 0) {
       starX[starCounter] = width;
     }
@@ -23,15 +25,20 @@ void drawStars() {
 }
 
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== \\
-// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== \\
+// ===== ===== ===== ===== ===== ===== ===== == Hier werden die Planeten generiert. == ===== ===== ===== ===== ===== ===== \\
 
 void drawPlanets() {
 
   int planetCounter= 0;
+
+  // Hier werden die Planeten bewegt.
+
   while (planetCounter < MAXplanets) {
     stroke(planetC[planetCounter]);
     strokeWeight(planetSize[planetCounter]);
     point(planetX[planetCounter], planetY[planetCounter]);
+
+    // Hier werden die Planeten, wenn sie links ankommen, wieder nach rechts gesetzt.
 
     planetX[planetCounter] = planetX[planetCounter] - planetS[planetCounter];
     if (planetX[planetCounter] < -200) {
@@ -46,9 +53,12 @@ void drawPlanets() {
 }
 
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== \\
-// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== \\
+// ===== ===== ===== ===== ===== ===== ===== Hier wird das Shuttle generiert. == ===== ===== ===== ===== ===== ===== ===== ===== \\
 
 void drawShuttle() {
+
+  // Hier wird getestet, ob die Maus außerhalb des Fensters ist, um das Shuttle dann am Rand zu bewegen, oder, wenn die Maus im Fenster ist, das Shuttle zur Maus zu packen.
+
   if (MouseInfo.getPointerInfo().getLocation().x < displayWidth / 6) {    
     shuttleX = 0 - 50;
   } else if (MouseInfo.getPointerInfo().getLocation().x > displayWidth / 6 * 5) {
@@ -67,11 +77,13 @@ void drawShuttle() {
     shuttleY = MouseInfo.getPointerInfo().getLocation().y - ((displayHeight / 6)) - 50;
   }
 
+  // Hier wird das Shuttle platziert 
+
   image(shuttle, shuttleX, shuttleY - 25, shuttleSize, shuttleSize);
 }
 
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== \\
-// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== \\
+// ===== ===== ===== ===== ===== ===== ===== Hier wird der Score gezählt und angezeigt. ==== ===== ===== ===== ===== ===== ===== \\
 
 void drawScore() {
   score += 1;
@@ -82,7 +94,7 @@ void drawScore() {
 }
 
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== \\
-// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== \\
+// ===== ===== ===== ===== ===== ===== ===== Hier wird das Level gezähl und agezeigt.  ===== ===== ===== ===== ===== ===== ===== \\
 
 void drawLevel() {
   lvlTimer += 1;
@@ -97,17 +109,24 @@ void drawLevel() {
 }
 
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== \\
-// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== \\
+// ===== ===== ===== ===== ===== ===== ===== ===== Hier werden die Meteoriten genereiert. == ===== ===== ===== ===== ===== ===== \\
 
 void drawMeteors() {
   int meteorCounter = 0;
+
+  // Hier wird die Anzahl der Meteoriten an das Level angepasst.
+
   MAXmeteors = lvl + 3;
 
-  //  Hier werden die Sterne bewegt.
+  //  Hier werden die Meteoriten platziert.
   while (meteorCounter < MAXmeteors) {
     image(meteor, meteorX[meteorCounter] - (meteorSize[meteorCounter]/2), meteorY[meteorCounter] - (meteorSize[meteorCounter]/2), meteorSize[meteorCounter], meteorSize[meteorCounter]); 
 
+    // Hier werden die Meteoriten bewegt.
+
     meteorX[meteorCounter] = meteorX[meteorCounter] - (meteorS[meteorCounter] + (lvl / 3));
+
+    // Hier wird getestet, ob der Meteor mit der Kugel kollidiert.
 
     if (isColliding(meteorSize[meteorCounter], meteorX[meteorCounter], meteorY[meteorCounter], bulletSize, bulletX, bulletY)) {
       meteorS[meteorCounter] = random(1, 5);
@@ -120,6 +139,7 @@ void drawMeteors() {
       bulletY = -100;
     }
 
+    // Hier wird getestet, ob der Meteor mit dem Shuttle kollidiert.
 
     if (isColliding(shuttleSize, mouseX, mouseY, meteorSize[meteorCounter], meteorX[meteorCounter], meteorY[meteorCounter])) {
       health -=1;
@@ -128,6 +148,8 @@ void drawMeteors() {
       meteorY[meteorCounter] = random(0, height);
       meteorSize[meteorCounter] = random(30, 100);
     }
+
+    // Hier wird getestet, ob der Meteor Links ankommt.
 
     if (meteorX[meteorCounter] < 0) {
       meteorS[meteorCounter] = random(1, 5);
@@ -140,22 +162,20 @@ void drawMeteors() {
 }
 
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== \\
-// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== \\
+// ===== ===== ===== ===== ===== ===== ===== ===== Hier wird der Endscreen gezeichnet. ===== ===== ===== ===== ===== ===== ===== \\
 
 void drawEndscreen() {
+  
+  // Hier wird getestet, ob ie Leertaste gedrückt wird, um den highscorescreen zu öffnen.
+  
   if (keyPressed) {
     if (key == ' ') {
       drawHighscoreScreen();
     }
-    //if (key == ENTER) {
-    //  inGame = true;
-    //  health = 10;
-    //  score = 0;
-    //  lvl = 0;
-    //  packTimer = 0;
-    //  lvlTimer = 0;
-    //}
   } else {
+    
+    // Hier wird der EndScreen gezeichnet.
+    
     background(0);
     textAlign(CENTER);
     textSize(width / 10);
@@ -176,7 +196,7 @@ void drawEndscreen() {
 }
 
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== \\
-// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== \\
+// ===== ===== ===== ===== ===== ===== Hier wird die Lebensanzeige generiert. == ===== ===== ===== ===== ===== ===== ===== ===== \\
 
 void drawHealthBar() {
   strokeWeight(30);
@@ -191,7 +211,7 @@ void drawHealthBar() {
 }
 
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== \\
-// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== \\
+// ===== ===== ===== ===== ===== ===== Hier wird getestet, ob die Leben über 10, oder unter 1 sind. ==== ===== ===== ===== ===== \\
 
 void drawMaxHealth() {
   if (health > 10) {
@@ -205,14 +225,19 @@ void drawMaxHealth() {
 }
 
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== \\
-// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== \\
+// ===== ===== ===== ===== ===== ===== Hier wird das Lebenspacket gezeichnet. == ===== ===== ===== ===== ===== ===== ===== ===== \\
 
 void drawPack() {
   packTimer += random(1, 3);
 
+// Hier wird getestet, ob der Timer eine bestimmte höhe erreicht, um das Pack zu platzieren.
+
   if (packTimer > 1000) {
     image(healpack, packX - (packSize/2), packY - (packSize/2), packSize, packSize);
     packX -= packS;
+    
+    // Hier wird getestet, ob das Pack mit dem Shuttle kollidiert.
+    
     if (isColliding(shuttleSize, mouseX, mouseY, packSize, packX, packY)) {
       health += 2;
       packTimer = 0;
@@ -233,7 +258,7 @@ void drawPack() {
 }
 
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== \\
-// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== \\
+// ===== ===== ===== ===== ===== ===== Hier wird die Laserkugel gezeichnet. ==== ===== ===== ===== ===== ===== ===== ===== ===== \\
 
 void drawBullet() {
 
@@ -253,7 +278,7 @@ void drawBullet() {
 }
 
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== \\
-// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== \\
+// ===== ===== ===== ===== ===== ===== Hier kann der Spieler seinen Name festlegen. == ===== ===== ===== ===== ===== ===== ===== \\
 
 void Nickname() {
 
@@ -281,40 +306,59 @@ void Nickname() {
 }
 
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== \\
-// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== \\
+// ===== ===== ===== ===== ===== Hier wrid die Highscore-Tabelle am Ende gezeichnet. = ===== ===== ===== ===== ===== ===== ===== \\
 
 void drawHighscoreScreen() {
   background(0);
-  textSize(width/20);
+  textSize(width/40);
   textAlign(CENTER);
   fill(255);
 
   Collections.sort(highscore);
 
   if (highscore.size() > 0) {
-    text("1. " + highscore.get(0).print(), width/2, 150);
+    text("1. " + highscore.get(0).print(), width/2, 100);
   }
 
   if (highscore.size() > 1) {
-    text("2. " + highscore.get(1).print(), width/2, 250);
+    text("2. " + highscore.get(1).print(), width/2, 150);
   }
 
   if (highscore.size() > 2) {
-    text("3. " + highscore.get(2).print(), width/2, 350);
+    text("3. " + highscore.get(2).print(), width/2, 200);
   }
 
   if (highscore.size() > 3) {
-    text("4. " + highscore.get(3).print(), width/2, 450);
+    text("4. " + highscore.get(3).print(), width/2, 250);
   }
 
   if (highscore.size() > 4) {
-    text("5. " + highscore.get(4).print(), width/2, 550);
+    text("5. " + highscore.get(4).print(), width/2, 300);
+  }
+  if (highscore.size() > 5) {
+    text("1. " + highscore.get(5).print(), width/2, 350);
+  }
+
+  if (highscore.size() > 6) {
+    text("2. " + highscore.get(6).print(), width/2, 400);
+  }
+
+  if (highscore.size() > 7) {
+    text("3. " + highscore.get(7).print(), width/2, 450);
+  }
+
+  if (highscore.size() > 8) {
+    text("4. " + highscore.get(8).print(), width/2, 500);
+  }
+
+  if (highscore.size() > 9) {
+    text("5. " + highscore.get(9      ).print(), width/2, 550);
   }
 
   textAlign(LEFT);
   fill(200);
-  textSize(width/35);
-  text("Die Top 5 Scores von " + (highscore.size() - 2) + " gespielten Spielen.", 50, 600);
+  textSize(width/40);
+  text("Die Top 10 Scores von " + (highscore.size()) + " gespielten Spielen.", 50, 600);
 
   textAlign(CENTER);
   fill(100);
@@ -323,13 +367,8 @@ void drawHighscoreScreen() {
   text("Starte das Spiel neu, um eine weitere runde zu starten.", width/2, height/2 + 350);
 }
 
-//==
-//==
-
-
-PrintWriter output;
-int size;
-//boolean highscoreSaved = false;
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== \\
+// ===== ===== ===== ===== ===== Hier wird der Highscore der Spieler gespeichert. ==== ===== ===== ===== ===== ===== ===== ===== \\
 
 void saveHighscore() {
   size = 0;
@@ -346,6 +385,9 @@ void saveHighscore() {
   size = 0;
   //}
 }
+
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== \\
+// ===== ===== ===== ===== ===== Hier wird die Datei mit den Highscores gelesen. ===== ===== ===== ===== ===== ===== ===== ===== \\
 
 void readHighscore() {
   BufferedReader reader = createReader("highscore.txt");

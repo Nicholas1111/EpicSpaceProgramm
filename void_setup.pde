@@ -4,11 +4,15 @@ void setup() {
   fill(255);
   stroke(255);
   frameRate(50);
+  
+// Hier werden die Bilder geladen.
 
   shuttle = loadImage("shuttle.png");
   meteor = loadImage("meteor.png");
   healpack = loadImage("healpack.png");
   bullet = loadImage("bullet.png");
+
+// Hier werden die Anfangsdaten der Sterne festgelegt.
 
   int starCounter = 0;
 
@@ -19,6 +23,8 @@ void setup() {
     starSize[starCounter] = random(1.0, 3.0);
     starCounter += 1;
   }
+
+// Hier werden die Anfangsdaten der Planeten festgelegt.
 
   int planetCounter = 0;
 
@@ -31,6 +37,8 @@ void setup() {
     planetCounter += 1;
   }
 
+// Hier werden die Anfangsdaten der Mteoriten festgelegt.
+
   int meteorCounter = 0;
 
   while (meteorCounter < MAXmeteors) {
@@ -41,15 +49,21 @@ void setup() {
     meteorCounter += 1;
   }
 
+// Hier werden die Daten des Medipacks festgelegt.
+
   packX = width;
   packY = random(0, height);
   packSize = 100;
   packS = 3;
 
+// Hier werden die Daten der Kugel festgelegt.
+
   bulletX = mouseX;
   bulletY = mouseY;
   bulletS = 5;
   bulletSize = 50;
+  
+// Hier wird der Highscore gelesen.
   
   readHighscore();
   println("Highscores erfolgreich geladen.");

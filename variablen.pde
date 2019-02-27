@@ -11,7 +11,7 @@ float starSize[] = new float[MAXstars];
 
 // ===== Planets ===== \\
 
-int MAXplanets = 4;
+int MAXplanets = int(random(3, 6));
 float planetX[] = new float[MAXplanets];
 float planetY[] = new float[MAXplanets];
 float planetS[] = new float[MAXplanets];
@@ -32,7 +32,7 @@ PImage shuttle;
 
 // ===== Meteors ===== \\
 
-int MAXmeteors = 1000;
+int MAXmeteors = 10000;
 float meteorX[] = new float[MAXmeteors];
 float meteorY[] = new float[MAXmeteors];
 float meteorS[] = new float[MAXmeteors];
@@ -112,5 +112,8 @@ LinkedList<Player> highscore = new LinkedList <Player>();
 
 // ===== ===== ===== ===== \\
 
+
+// ===== Highscorelist Size, is game started?, Print in file with output ===== \\
 boolean inGame = true;
-int SizeOfScores = 0;
+PrintWriter output;
+int size;
