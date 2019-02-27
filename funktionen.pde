@@ -165,17 +165,17 @@ void drawMeteors() {
 // ===== ===== ===== ===== ===== ===== ===== ===== Hier wird der Endscreen gezeichnet. ===== ===== ===== ===== ===== ===== ===== \\
 
 void drawEndscreen() {
-  
+
   // Hier wird getestet, ob ie Leertaste gedrückt wird, um den highscorescreen zu öffnen.
-  
+
   if (keyPressed) {
     if (key == ' ') {
       drawHighscoreScreen();
     }
   } else {
-    
+
     // Hier wird der EndScreen gezeichnet.
-    
+
     background(0);
     textAlign(CENTER);
     textSize(width / 10);
@@ -230,14 +230,14 @@ void drawMaxHealth() {
 void drawPack() {
   packTimer += random(1, 3);
 
-// Hier wird getestet, ob der Timer eine bestimmte höhe erreicht, um das Pack zu platzieren.
+  // Hier wird getestet, ob der Timer eine bestimmte höhe erreicht, um das Pack zu platzieren.
 
   if (packTimer > 1000) {
     image(healpack, packX - (packSize/2), packY - (packSize/2), packSize, packSize);
     packX -= packS;
-    
+
     // Hier wird getestet, ob das Pack mit dem Shuttle kollidiert.
-    
+
     if (isColliding(shuttleSize, mouseX, mouseY, packSize, packX, packY)) {
       health += 2;
       packTimer = 0;
@@ -246,6 +246,8 @@ void drawPack() {
       packSize = 100;
       packS = 3;
     }
+
+    // Hier wird getestet, ob das Pack Links ankommt.
 
     if (packX < 0) {
       packTimer = 0;
@@ -262,11 +264,16 @@ void drawPack() {
 
 void drawBullet() {
 
+  // Hier wird getestet, ob die Maustaste gedrückt ist, un d ob noch keine Kugel in der Luft ist.
+
   if (mousePressed == true && bulletInAir == false) {
     bulletInAir = true;
     bulletX = mouseX;
     bulletY = mouseY;
   }
+
+  // Hier wird die Kugel platziert und bewegt.
+
   if (bulletInAir == true) {
     if (bulletX < width) {
       image(bullet, bulletX - bulletSize/2, bulletY - bulletSize/2, bulletSize, bulletSize);
@@ -282,15 +289,22 @@ void drawBullet() {
 
 void Nickname() {
 
-  final String id = showInputDialog("Bitte lege einen Namen fest.");
+  // Hier wird der Spieler nach seinem Namen gefragt. 
+
+  final String id = showInputDialog("Bitte gebe deinen Kürzel als Namen ein, um in die Highscoreliste eingetragen zu werden.");
 
   if (id == null)   exit();
+
+  // Falls der Spieler nichts einträgt, wird er erinnert, etwas einzugeben.
 
   else if ("".equals(id)) {
     showMessageDialog(null, "Bitte etwas eingeben!", 
       "Alert", ERROR_MESSAGE);
     Nickname();
   } else if (ids.hasValue(id)) {
+
+    // Wenn der Spieler etwas einträgt, wird er benachrichtigt, das sein Score eingetragen wurde.
+
     showMessageDialog(null, "Der score wurde Hinzugefügt.", 
       "Info", INFORMATION_MESSAGE);
   } else {
@@ -299,6 +313,9 @@ void Nickname() {
 
     ids.append(id);
   }
+
+  // Hier wird der Name mit dem Score zu einem neuen Spieler Account gemacht, und zur Liste hinzugefügt.
+
   Player newplayer = new Player();
   newplayer.Name = id;
   newplayer.Score = score;
@@ -314,7 +331,11 @@ void drawHighscoreScreen() {
   textAlign(CENTER);
   fill(255);
 
+  // Hier wird die Liste geordnet.
+
   Collections.sort(highscore);
+
+  // Hier werden die ersten 10 Plätze der Liste angezeigt.
 
   if (highscore.size() > 0) {
     text("1. " + highscore.get(0).print(), width/2, 100);
@@ -336,24 +357,26 @@ void drawHighscoreScreen() {
     text("5. " + highscore.get(4).print(), width/2, 300);
   }
   if (highscore.size() > 5) {
-    text("1. " + highscore.get(5).print(), width/2, 350);
+    text("6. " + highscore.get(5).print(), width/2, 350);
   }
 
   if (highscore.size() > 6) {
-    text("2. " + highscore.get(6).print(), width/2, 400);
+    text("7. " + highscore.get(6).print(), width/2, 400);
   }
 
   if (highscore.size() > 7) {
-    text("3. " + highscore.get(7).print(), width/2, 450);
+    text("8. " + highscore.get(7).print(), width/2, 450);
   }
 
   if (highscore.size() > 8) {
-    text("4. " + highscore.get(8).print(), width/2, 500);
+    text("9. " + highscore.get(8).print(), width/2, 500);
   }
 
   if (highscore.size() > 9) {
-    text("5. " + highscore.get(9      ).print(), width/2, 550);
+    text("10. " + highscore.get(9      ).print(), width/2, 550);
   }
+
+  // Hier werden erklärungen angezeigt.
 
   textAlign(LEFT);
   fill(200);
@@ -371,39 +394,57 @@ void drawHighscoreScreen() {
 // ===== ===== ===== ===== ===== Hier wird der Highscore der Spieler gespeichert. ==== ===== ===== ===== ===== ===== ===== ===== \\
 
 void saveHighscore() {
+
+  // Hier wird die Variable für die Anzahl der einzutragenen Highscores auf 0 gesetzt, und output wird der Datei "highscore.txt" zugewiesen.
+
   size = 0;
   output = createWriter("highscore.txt");
 
-  //  if (highscoreSaved == false) {
   while ( size < highscore.size() ) {
+
+    // Hier werden die highscores in die Datei geschrieben.
+
     output.println(highscore.get(size).Name + " | " + highscore.get(size).Score);
     size += 1;
   }
+
+  // Hier wird die Datei gespeichert und geschlossen.
+
   output.flush();
   output.close();
-  //highscoreSaved = true;
   size = 0;
-  //}
 }
 
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== \\
 // ===== ===== ===== ===== ===== Hier wird die Datei mit den Highscores gelesen. ===== ===== ===== ===== ===== ===== ===== ===== \\
 
 void readHighscore() {
+
+  // Hier wird eine Variable zum Zählen der Zeilen in Datei festgelegt, und reader wird der Datei "highscore.txt" zugewiesen.
+
   BufferedReader reader = createReader("highscore.txt");
   String line = null;
   try {
     while ((line = reader.readLine()) != null) {
+
+      // Hier wird das gelesene in Name und Score geteilt, und als Variablen definiert.
+
       String[] pieces = splitTokens(line, "|");
       pieces[0] = trim(pieces[0]);
       pieces[1] = trim(pieces[1]);
       String NAME = pieces[0];
       int SCORE = Integer.parseInt(pieces[1]);
       Player newplayer = new Player();
+
+      // Hier werden die gelesenen Daten in einen newplayer gewandelt.
+
       newplayer.Name = NAME;
       newplayer.Score = SCORE;
       highscore.add(newplayer);
     }
+
+    // Hier wird der reader beendet.
+
     reader.close();
   } 
   catch (IOException e) {
